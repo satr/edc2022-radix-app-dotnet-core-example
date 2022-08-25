@@ -1,5 +1,8 @@
+using System;
+using app.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -19,6 +22,12 @@ namespace app
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<CatalogContext>(options =>
+            {
+                // var connectionString = Configuration.GetConnectionString("CatalogueDatabase");
+                var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING")??"";
+                options.UseSqlServer(connectionString);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

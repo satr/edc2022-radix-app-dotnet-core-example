@@ -16,3 +16,5 @@ spec:
       publicPort: http
       variables:
         ASPNETCORE_URLS: "http://+:8000"
+      secrets:
+        - CONNECTION_STRING
