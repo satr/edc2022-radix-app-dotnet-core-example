@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: database-migration
+spec:
+  steps:
+    - name: clone-repo                                          #step to clone a Git repository
+      image: alpine/git                                         #Docker image with Git CLI
+      args:
+        - clone                                                 #command to clone the git repository
+        - https://github.com/satr/edc2022-radix-app-dotnet-core-example #the repository to be cloned
+        - -b                                                    #clone specific branch
+        - main                                                  #the branch to be cloned
+        - /var/source/branch                                    #a folder, where to clone the repository
+      volumeMounts:
+        - name: source-volume                                   #using an empty volume, shared between this task steps
+          mountPath: /var/source                                #path, where the common empty volume is mapped
+    - name: show-repo                                           #step to process the repository, cloned in the step "clone-repo"
+      image: mcr.microsoft.com/dotnet/sdk:6.0                   #buil
+      script: |
+        #!/usr/bin/env sh
+        dotnet tool install --global dotnet-ef
+        export PATH="$PATH:/root/.dotnet/tools"
+        cd /var/cloned-repo
+        echo "Start database migration"
+        dotnet ef database update
+        echo "Database migration completed"
+      volumeMounts:
+        - name: source-volume                                   #using the same volume, used in the step "clone-repo"
+          mountPath: /var/cloned-repo                           #mount this volume to a folder "/var/cloned-repo"
+  volumes:
+    - name: source-volume                                       #a volume, which can be shared between task steps
+      emptyDir: {}                                              #just an empty volume, being deleted after completion of the task
