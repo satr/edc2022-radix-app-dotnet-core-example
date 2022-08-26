@@ -4,7 +4,7 @@ metadata:
   name: database-migration
 spec:
   params:
-    - name: CONNECTION_STRING
+    - name: ConnectionString
   steps:
     - name: clone-repo                                          #step to clone a Git repository
       image: alpine/git                                         #Docker image with Git CLI
@@ -21,7 +21,7 @@ spec:
       image: mcr.microsoft.com/dotnet/sdk:6.0                   #buil
       env:
         - name: CONNECTION_STRING
-          value: $(params.CONNECTION_STRING)
+          value: $(params.ConnectionString)
       script: |
         #!/usr/bin/env sh
         dotnet tool install --global dotnet-ef
