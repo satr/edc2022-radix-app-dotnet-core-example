@@ -5,7 +5,6 @@ using app.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using app.Models;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace app.Controllers
 {
@@ -28,10 +27,7 @@ namespace app.Controllers
         public IActionResult Items()
         {
             var items = _dbContext.CatalogItems
-                .Where(b => b.Enabled)
                 .OrderBy(b => b.Name)
-                .Select(b => new SelectListItem {
-                    Value = b.Id.ToString(), Text = b.Name })
                 .ToList();
             return View(items);
         }

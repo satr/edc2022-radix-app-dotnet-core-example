@@ -1,4 +1,4 @@
-@model List<SelectListItem>
+@model List<app.Data.CatalogItem>
 
 @{
     ViewBag.Title = "Catalogue";
@@ -6,4 +6,28 @@
 }
 
 <h2>Catalogue</h2>
-{@Model}
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(m=>item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.Description)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
