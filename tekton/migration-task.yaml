@@ -16,7 +16,7 @@ spec:
         - name: source-volume                                   #using an empty volume, shared between this task steps
           mountPath: /var/source                                #path, where the common empty volume is mapped
     - name: show-repo                                           #step to process the repository, cloned in the step "clone-repo"
-      image: mcr.microsoft.com/dotnet/sdk:6.0                   #buil
+      image: mcr.microsoft.com/dotnet/sdk:6.0                   #build and migrate
       env:
         - name: CONNECTION_STRING
           valueFrom:
@@ -27,11 +27,11 @@ spec:
         #!/usr/bin/env sh
         dotnet tool install --global dotnet-ef
         export PATH="$PATH:/root/.dotnet/tools"
-        ls /var/cloned-repo
         cd /var/cloned-repo/branch/app
         echo "Start database migration"
         dotnet ef database update
         echo "Database migration completed"
+        :
       volumeMounts:
         - name: source-volume                                   #using the same volume, used in the step "clone-repo"
           mountPath: /var/cloned-repo                           #mount this volume to a folder "/var/cloned-repo"

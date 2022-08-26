@@ -38,7 +38,12 @@ namespace app.Controllers
 
         public IActionResult Create()
         {
-            var item = new CatalogItem() { Name = $"Item {DateTime.Now.ToLongTimeString()}" };
+            var timeNow = DateTime.Now.ToLongTimeString();
+            var item = new CatalogItem()
+            {
+                Name = $"Item {timeNow}",
+                Description = $"Description: {timeNow}"
+            };
             _dbContext.Add(item);
             _dbContext.SaveChangesAsync();
             return View(item);
