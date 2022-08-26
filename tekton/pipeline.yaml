@@ -3,14 +3,7 @@ kind: Pipeline
 metadata:
   name: pipeline
 spec:
-  params:
-    - name: CONNECTION_STRING
   tasks:
     - name: database-migration
-      params:
-        - name: ConnectionString
-          value:
-            type: string
-            stringVal: $(params.CONNECTION_STRING)
       taskRef:
         name: database-migration

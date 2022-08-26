@@ -3,8 +3,6 @@ kind: Task
 metadata:
   name: database-migration
 spec:
-  params:
-    - name: ConnectionString
   steps:
     - name: clone-repo                                          #step to clone a Git repository
       image: alpine/git                                         #Docker image with Git CLI
@@ -21,7 +19,10 @@ spec:
       image: mcr.microsoft.com/dotnet/sdk:6.0                   #buil
       env:
         - name: CONNECTION_STRING
-          value: $(params.ConnectionString)
+          valueFrom:
+            secretKeyRef:
+              name: $(radix.build-secrets)
+              key: CONNECTION_STRING
       script: |
         #!/usr/bin/env sh
         dotnet tool install --global dotnet-ef
