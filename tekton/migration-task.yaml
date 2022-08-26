@@ -27,7 +27,8 @@ spec:
         #!/usr/bin/env sh
         dotnet tool install --global dotnet-ef
         export PATH="$PATH:/root/.dotnet/tools"
-        cd /var/cloned-repo/app
+        ls /var/cloned-repo
+        cd /var/cloned-repo/branch/app
         echo "Start database migration"
         dotnet ef database update
         echo "Database migration completed"
