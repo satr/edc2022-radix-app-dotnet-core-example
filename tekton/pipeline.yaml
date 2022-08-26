@@ -4,7 +4,7 @@ metadata:
   name: pipeline
 spec:
   params:
-    - CONNECTION_STRING
+    - name: CONNECTION_STRING
   tasks:
     - name: database-migration
       params:
