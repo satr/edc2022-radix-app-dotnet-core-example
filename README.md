@@ -8,8 +8,8 @@ Install [Docker](https://docs.docker.com/get-docker/) and [dotnet core](https://
 * Register an Radix application in the Radix console
 * Deploy the application
 * Create a cloud database. E.g. Azure Sql database 
-* Set the `CONNECTION_STRING` secret for the Radix application component
-* Set the `CONNECTION_STRING` build secret for the Radix application
+* Set the `CONNECTION_STRING` [runtime secret](https://radix.equinor.com/references/reference-radix-config/#secrets) for the Radix application component
+* Set the `CONNECTION_STRING` [build secret](https://radix.equinor.com/references/reference-radix-config/#build) for the Radix application
 * Initiate the migration for the application code
   * On the local PC/Mac:
     * Install the [`dotnet-ef` tool](https://docs.microsoft.com/en-us/ef/core/cli/dotnet)
@@ -20,7 +20,7 @@ Install [Docker](https://docs.docker.com/get-docker/) and [dotnet core](https://
       * Install the [`dotnet-ef` tool](https://docs.microsoft.com/en-us/ef/core/cli/dotnet)
       * Navigate to the mounted folder `/var/app`, run the command `dotnet ef migrations add InitialCreate`
 * In the project - create the folder `tekton` and create files `pipeline.yaml` and `migration-task.yaml`
-* Add a reference to the build secret in the task
+* Add a reference to the [build secret in the task](https://radix.equinor.com/guides/sub-pipeline/example-pipeline-with-build-secrets.html)
   ```yaml
   env:
     - name: CONNECTION_STRING

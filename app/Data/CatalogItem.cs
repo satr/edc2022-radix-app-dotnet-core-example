@@ -8,5 +8,6 @@ namespace app.Data
         public string Name { get; set; }
         public string Description { get; set; }
         public bool Enabled { get; set; } = true;
+        public int Amount { get; set; }
     }
 }
