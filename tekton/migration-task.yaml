@@ -3,6 +3,8 @@ kind: Task
 metadata:
   name: database-migration
 spec:
+  params:
+    - name: ConnectionString
   steps:
     - name: clone-repo                                          #step to clone a Git repository
       image: alpine/git                                         #Docker image with Git CLI
@@ -17,11 +19,14 @@ spec:
           mountPath: /var/source                                #path, where the common empty volume is mapped
     - name: show-repo                                           #step to process the repository, cloned in the step "clone-repo"
       image: mcr.microsoft.com/dotnet/sdk:6.0                   #buil
+      env:
+        - name: CONNECTION_STRING
+          value: $(params.ConnectionString)
       script: |
         #!/usr/bin/env sh
         dotnet tool install --global dotnet-ef
         export PATH="$PATH:/root/.dotnet/tools"
-        cd /var/cloned-repo
+        cd /var/cloned-repo/app
         echo "Start database migration"
         dotnet ef database update
         echo "Database migration completed"
