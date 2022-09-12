@@ -30,7 +30,13 @@ spec:
         cd /var/cloned-repo/branch/app
         echo "Start database migration"
         dotnet ef database update
-        echo "Database migration completed"
+        status=$?
+        if [[ $status -eq 0 ]] 
+          echo "Database migration completed"
+        elif
+          echo "Database migration failed"
+          exit $status
+        fi
         :
       volumeMounts:
         - name: source-volume                                   #using the same volume, used in the step "clone-repo"
