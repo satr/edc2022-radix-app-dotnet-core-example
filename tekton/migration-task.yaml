@@ -28,15 +28,19 @@ spec:
         dotnet tool install --global dotnet-ef
         export PATH="$PATH:/root/.dotnet/tools"
         cd /var/cloned-repo/branch/app
+        
         echo "Start database migration"
+        
         dotnet ef database update
+        
         status=$?
         if [[ $status -eq 0 ]] 
+        then
           echo "Database migration completed"
-        elif
+        else
           echo "Database migration failed"
-          exit $status
         fi
+        exit $status
         :
       volumeMounts:
         - name: source-volume                                   #using the same volume, used in the step "clone-repo"
