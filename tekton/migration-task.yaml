@@ -15,7 +15,7 @@ spec:
       volumeMounts:
         - name: source-volume                                   #using an empty volume, shared between this task steps
           mountPath: /var/source                                #path, where the common empty volume is mapped
-    - name: show-repo                                           #step to process the repository, cloned in the step "clone-repo"
+    - name: migrate-database                                           #step to process the repository, cloned in the step "clone-repo"
       image: mcr.microsoft.com/dotnet/sdk:6.0                   #build and migrate
       env:
         - name: CONNECTION_STRING
