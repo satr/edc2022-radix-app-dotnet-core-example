@@ -34,7 +34,7 @@ spec:
         dotnet ef database update
         
         status=$?
-        if [[ $status -eq 0 ]] 
+        if [ $status -eq 0 ] 
         then
           echo "Database migration completed"
         else
